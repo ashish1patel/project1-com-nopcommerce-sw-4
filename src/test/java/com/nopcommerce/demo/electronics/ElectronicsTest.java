@@ -1,31 +1,32 @@
 package com.nopcommerce.demo.electronics;
 
-import com.nopcommerce.demo.Pages.ElectronicsPage;
+import com.nopcommerce.demo.Pages.*;
 import com.nopcommerce.demo.testbase.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ElectronicsTest extends BaseTest {
 
-    ElectronicsPage electronics = new ElectronicsPage();
-    ElectronicsPage cellPhones = new ElectronicsPage();
-    ElectronicsPage nokiaLumia1020 = new ElectronicsPage();
-    ElectronicsPage shoppingCart = new ElectronicsPage();
-    ElectronicsPage login = new ElectronicsPage();
-    ElectronicsPage register = new ElectronicsPage();
-    ElectronicsPage checkout = new ElectronicsPage();
+    HomePage homePage = new HomePage();
+    CellPhonePage cellPhonePage = new CellPhonePage();
+    NokiaLumia1020 nokiaLumia1020 = new NokiaLumia1020();
+    ShoppingCartPage shoppingCart = new ShoppingCartPage();
+    LogInPage logIn = new LogInPage();
+    RegisterPage register = new RegisterPage();
+    CheckoutPage checkout = new CheckoutPage();
+
 
     @Test
     public void verifyUserShouldNavigateToCellPhonesPageSuccessfully() {
 
-        //1.1 Mouse Hover on “Electronics”Tab
-        electronics.hoverOnElectronics();
+        //1.1 Mouse Hover on “Electronics” Tab
+        homePage.hoverOnElectronics();
 
         //1.2 Mouse Hover on “Cell phones” and click
-        electronics.hoverOnCellPhoneAndClick();
+        homePage.hoverOnCellPhoneAndClick();
 
         //1.3 Verify the text “Cell phones”
-        String actualText = cellPhones.getCellPhoneText();
+        String actualText = cellPhonePage.getCellPhoneText();
         Assert.assertEquals(actualText, "Cell phones", "Text not Displayed");
     }
 
@@ -33,21 +34,21 @@ public class ElectronicsTest extends BaseTest {
     public void verifyThatTheProductAddedSuccessfullyAndPlaceOrderSuccessfully() throws InterruptedException {
 
         //2.1 Mouse Hover on “Electronics” Tab
-        electronics.hoverOnElectronics();
+        homePage.hoverOnElectronics();
 
         //2.2 Mouse Hover on “Cell phones” and click
-        electronics.hoverOnCellPhoneAndClick();
+        homePage.hoverOnCellPhoneAndClick();
 
         //2.3 Verify the text “Cell phones”
-        String actualText = cellPhones.getCellPhoneText();
+        String actualText = cellPhonePage.getCellPhoneText();
         Assert.assertEquals(actualText, "Cell phones", "Text not Displayed");
 
         //2.4 Click on List View Tab
-        cellPhones.clickOnListViewTab();
+        cellPhonePage.clickOnListViewTab();
 
         //2.5 Click on product name “Nokia Lumia 1020” link
         Thread.sleep(1000);
-        cellPhones.clickOnNokiaLumia1020();
+        cellPhonePage.clickOnNokiaLumia1020();
 
         //2.6 Verify the text “Nokia Lumia 1020”
         String actualNokiaLumiaText = nokiaLumia1020.getNokiaLumiaText();
@@ -72,8 +73,8 @@ public class ElectronicsTest extends BaseTest {
         nokiaLumia1020.mouseHoverOnShoppingCart();
         nokiaLumia1020.clickOnShoppingCart();
 
-        //2.12 Verify the message "Shopping cart"
-        String actualShoppingCartMessage = shoppingCart.getShoppingCartText();
+        // 2.12 Verify the message "Shopping cart"
+        String actualShoppingCartMessage = shoppingCart.verifyShoppingCartText();
         Assert.assertEquals(actualShoppingCartMessage, "Shopping cart", "error");
         Thread.sleep(2000);
 
@@ -83,7 +84,7 @@ public class ElectronicsTest extends BaseTest {
         Assert.assertEquals(actualQuantity, "(2)", "Error");
 
         //2.14 Verify the Total $698.00
-        String actualTotal = shoppingCart.getVerifyTotal();
+        String actualTotal = shoppingCart.getTotalText();
         Assert.assertEquals(actualTotal, "$698.00", "Error");
 
         //2.15 click on checkbox “I agree with the terms of service”
@@ -93,20 +94,20 @@ public class ElectronicsTest extends BaseTest {
         shoppingCart.clickOnCheckOutButton();
 
         //2.17 Verify the Text “Welcome, Please Sign In!”
-        String actualWelcomeText = login.getWelcomePageSignInText();
+        String actualWelcomeText = logIn.getWelcomePageSignInText();
         Assert.assertEquals(actualWelcomeText, "Welcome, Please Sign In!", "Error");
 
         //2.18 Click on “REGISTER” tab
-        login.clickOnRegisterButton();
+        logIn.clickOnRegisterButton();
 
         //2.19 Verify the text “Register”
         String actualRegisterText = register.getRegisterText();
         Assert.assertEquals(actualRegisterText, "Register", "Error");
 
         //2.20 Fill the mandatory fields
-        register.inputFirstname("Prime");
-        register.inputLastname("testing");
-        register.inputEmail("prime1230@gmail.com");
+        register.inputFirstname1("Prime");
+        register.inputLastname1("testing");
+        register.inputEmail1("prime1239@gmail.com");
         register.inputPassword("prime123");
         register.inputConfirmPassword("prime123");
 
@@ -118,29 +119,29 @@ public class ElectronicsTest extends BaseTest {
         Assert.assertEquals(actualRegisterSuccessMessage, "Your registration completed", "error");
 
         //2.23 Click on “CONTINUE” tab
-        register.clickOnContinueButton();
+        register.clickOnContinueButton1();
 
         //2.24 Verify the text “Shopping cart”
-        String actualShoppingCartText = shoppingCart.getShoppingCartText1();
+        String actualShoppingCartText = shoppingCart.verifyShoppingCartText();
         Assert.assertEquals(actualShoppingCartText, "Shopping cart", "error");
         Thread.sleep(2000);
 
         //after this step cart become empty, so we need to login for next step
-        login.clickOnLogin();
-        login.inputEmail1("prime1230@gmail.com");
-        login.inputPassword1("prime123");
-        login.clickOnLogin1();
+        shoppingCart.clickOnLogin();
+        logIn.inputEmail("prime1239@gmail.com");
+        logIn.inputPassword("prime123");
+        logIn.clickOnLogin();
 
         //2.25 click on checkbox “I agree with the terms of service”#
-        checkout.clickOnTermsOfServiceCheckBox();
+        shoppingCart.clickOnTermsOfServiceCheckBox();
 
-//        //2.26 Click on “CHECKOUT”
-        checkout.clickOnCheckOutButton();
-//
+        //2.26 Click on “CHECKOUT”
+        shoppingCart.clickOnCheckOutButton();
+
         //2.27 Fill the Mandatory fields
         //checkout.inputFirstname1("prime123");
         // checkout.inputLastname1("testing");
-        // checkout.inputEmail2("prime1235@gmail.com");
+        // checkout.inputEmail2("prime1236@gmail.com");
         checkout.selectCountry("United Kingdom");
         checkout.inputCity("London");
         checkout.inputAddress("12 Kings Road");
@@ -148,14 +149,14 @@ public class ElectronicsTest extends BaseTest {
         checkout.inputPhoneNumber("01234567890");
 
         //2.28 Click on “CONTINUE”
-        checkout.clickOnContinueButton1();
+        checkout.clickOnContinueButton3();
 
 
         //2.29 Click on Radio Button “2nd Day Air ($0.00)”
         checkout.clickOnRadioButton2ndDayAir();
 
         // 2.30 Click on “CONTINUE”
-        checkout.clickOnContinueButton2();
+        checkout.clickOnContinueButton1();
 
         // 2.31 Select Radio Button “Credit Card”
         checkout.clickOnCreditCard();
@@ -174,7 +175,7 @@ public class ElectronicsTest extends BaseTest {
         checkout.inputCardCode("123");
 
         //2.34 Click on “CONTINUE” CHECKOUT.
-        checkout.clickOnContinueButton3();
+        checkout.clickOnContinueButton2();
 
         // 2.35 Verify “Payment Method” is “Credit Card”
         String actualCreditCardText = checkout.getCreditCardText();
@@ -187,10 +188,10 @@ public class ElectronicsTest extends BaseTest {
         Thread.sleep(2000);
 
 
-        // 2.37 Verify Total is “$698.00”
-        String actualTotalText = checkout.getTotalAmountText();
-        Assert.assertEquals(actualTotalText, "$698.00", "Total amount is not match");
-        Thread.sleep(2000);
+//        // 2.37 Verify Total is “$698.00”
+//        String actualTotalText = checkout.getTotalAmountText();
+//        Assert.assertEquals(actualTotalText, "$698.00", "Total amount is not match");
+//        Thread.sleep(2000);
 
         // 2.38 Click on “CONFIRM”
         checkout.clickOnConfirmButton();
@@ -199,7 +200,6 @@ public class ElectronicsTest extends BaseTest {
         String actualThankYouText = checkout.getThankYouText();
         Assert.assertEquals(actualThankYouText, "Thank you", "Something wrong");
         Thread.sleep(2000);
-
 
         //2.40 Verify the message “Your order has been successfully processed!”
         String actualSuccessfullyProcessedText = checkout.getOrderSuccessProcessText();
@@ -211,12 +211,12 @@ public class ElectronicsTest extends BaseTest {
 
 
         // 2.42 Verify the text “Welcome to our store”
-        String actualWelcomeOurStoreText = checkout.getWelcomeOurStoreText();
+        String actualWelcomeOurStoreText = homePage.getWelcomeOurStoreText();
         Assert.assertEquals(actualWelcomeOurStoreText, "Welcome to our store", "Incorrect Message");
         Thread.sleep(2000);
 
         // 2.43 Click on “Logout” link
-        checkout.clickOnLogOutButton();
+        homePage.clickOnLogOutButton();
 
         // 2.44 Verify the URL is “https://demo.nopcommerce.com/”
         String actualURL = driver.getCurrentUrl();

@@ -1,6 +1,6 @@
 package com.nopcommerce.demo.homepage;
 
-import com.nopcommerce.demo.Pages.TopMenuPage;
+import com.nopcommerce.demo.Pages.HomePage;
 import com.nopcommerce.demo.testbase.BaseTest;
 import org.testng.annotations.Test;
 
@@ -12,12 +12,12 @@ public class TopMenuTest extends BaseTest {
   1.2 This method should click on the menu whatever name is passed as parameter.
    */
 
-
-    TopMenuPage topMenuPage = new TopMenuPage();
+    HomePage homePage = new HomePage();
 
     @Test
     public void verifyPageNavigation() {
-        topMenuPage.selectMenu("Gift Cards");
+
+        homePage.selectMenu("Gift Cards");
     }
 
 
